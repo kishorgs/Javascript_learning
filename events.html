@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick={buttonClick()}>Click Event</button>
+    <button ondblclick={buttonDoubleClick()}>Double click event</button>
+    <div id="mouseEventDiv" onMouseOver={mouseOver()} onMouseOut={mouseOut()} onMousedown={mouseDown()} onMouseUp="mouseUp()"" style="background-color: rgb(227, 255, 189); border: 2px solid red; width: 500px; height: 150px; padding:10px; margin:10px">
+        <p id="mouseOverText"></p>
+        <p id="mouseOutText"></p>
+        <p id="mouseDownText"></p>
+        <p id="mouseUpText"></p>
+    </div>
+    <div id="keyBoardEventDiv" style="background-color: aliceblue; border: 2px solid blue; width:500px; height:150px; padding:10px; margin:10px;">
+
+    </div>
+    <form id="form">
+        <input id="nameInput" type="text" placeholder="ENTER YOUR NAME"/>
+        <input id="nameChange" type="text" placeholder="ENTER YOUR NAME"/>
+        <input type="submit" value="Submit"/>
+    </form>
+    <div id="websites"></div>
+    <div draggable="true" id="dragItem" style="background-color:lightblue; width:100px; height:100px; margin:10px;">
+        Drag me
+    </div>
+    <div id="dragDropComponent" style="background-color:antiquewhite; width:150px; height:150px; border:2px solid blueviolet">
+        Drop here
+    </div>   
+</body>
+<script src="events.js"></script>
+</html>
