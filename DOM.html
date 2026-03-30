@@ -5,8 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+.active{
+    background-color: brown;
+    color:#ffffff;
+}
+</style>
 <body>
     <h1>This is to understand DOM</h1>
+    <div id="containerDiv">
+        <h3 class="title">
+            This div is to demonstrate DOM manipulation
+        </h3>
+        <p>This is a paragraph</p>
+        <ul>
+            <li class="item">A</li>
+            <li class="item">B</li>
+            <li class="item">C</li>
+        </ul>
+        <button id="btn">Click me</button>
+    </div>
+    <div id="classListDemo">
+        <div id="demoDiv">hi</div>
+        <button id="add">Add</button>
+        <button id="remove">Remove</button>
+        <button id="toggle">Toggle</button>
+    </div>
+    <div id="textUpdateDiv">
+        <span id="counter">0</span>
+        <button id="increment">Increment by 1</button>
+        <span id="dynamicCounter"></span>
+    </div>
     <script src="DOM.js"></script>
 </body>
 </html>
