@@ -5,7 +5,7 @@ const users = [
 ];
 
 function getUserByName(name) {
-  return users.find((user) => user.name === name);
+  return users.find((user) => user.name.toLowerCase() === name); //Here the input parameter was in lowercase and the variable entered was is camel case which was not allowing the user to search even when the user was present it was returning user not found error, solved uisng breakpoint in the breakpoint I found while comparing both the values other were not same so I solved that using convertion.
 }
 
 function showMessage(mesaage) {
@@ -16,7 +16,7 @@ function showMessage(mesaage) {
 function renderUserList() {
   const listEl = document.getElementById('userList');
   let html = '';
-  for (let i = 0; i <= users.length; i++) {
+  for (let i = 0; i < users.length; i++) {
     const u = users[i];
     if (!u) continue;
     html += `<li>${u.name} (${u.age})</li>`;
@@ -90,6 +90,11 @@ function checkUser() {
   }
 
   const ageInput = Number(document.getElementById('ageInput').value);
+
+  if(ageInput <= 0 || isNaN(ageInput)) {
+    showMessage('Please enter a valid age to compare');
+    return;
+  }
 
   if (ageInput < user.age) {
     showMessage('You are younger than the stored user.');
