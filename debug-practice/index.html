@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Debug Practice App</title>
+</head>
+<body>
+  <h1>Debug Practice App</h1>
+
+  <label for="username">User Name:</label>
+  <input id="username" type="text" placeholder="Enter name" />
+
+  <label for="ageInput">Age:</label>
+  <input id="ageInput" type="number" placeholder="Enter age" />
+
+  <button id="checkBtn">Check User</button>
+
+  <h2>User Management</h2>
+  <div>
+    <label for="newName">New Name:</label>
+    <input id="newName" type="text" placeholder="Name" />
+    <label for="newAge">New Age:</label>
+    <input id="newAge" type="number" placeholder="Age" />
+    <button id="addBtn">Add User</button>
+  </div>
+
+  <div>
+    <label for="removeName">Remove Name:</label>
+    <input id="removeName" type="text" placeholder="Name" />
+    <button id="removeBtn">Remove User</button>
+  </div>
+
+  <h3>Users</h3>
+  <ul id="userList"></ul>
+  <p id="averageAge">Average age: --</p>
+
+  <p id="result">Result here</p>
+
+  <script src="script.js"></script>
+</body>
+</html>
