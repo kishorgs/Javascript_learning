@@ -1,0 +1,28 @@
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.inputElement{
+    display: flex;
+    width: 12rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.button{
+    width : 12rem;
+    height : 2rem;
+    color: white;
+    background-color: blueviolet;
+    border-radius: 5px;
+    border :0;
+    cursor: pointer;
+    font-weight: 600;
+}
