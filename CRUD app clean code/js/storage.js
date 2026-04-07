@@ -1,40 +1,93 @@
 import { constants } from "./constants.js";
+import { generateID } from "./utility.js";
 
-export function getTasks(){
-    const stored = localStorage.getItem(constants.quicknotes_tasks);
+export const taskManager = (() => {
+    function getTasks(){
+        try{
+            const stored = localStorage.getItem(constants.quicknotes_tasks);
 
-    if(!stored) return [];
+            if(!stored) return [];
 
-    try{
-        const parsed  = JSON.parse(stored);
+            const parsed  = JSON.parse(stored);
 
-        return Array.isArray(parsed) ? parsed : [];
-    }catch(error){
-        console.log("Error fetching tasks : ", error);
-    }
-}
-
-export function validateTask({title, description}) {
-    if(!title || !description){
-        alert("Please enter both title and description");
-    }
-}
-
-export function saveTasks({title, description}) {
-    try{
-        const tasks = getTasks();
-
-        validateTask({title, description});
-
-        const task = {
-            title : title,
-            description : description
+            return Array.isArray(parsed) ? parsed : [];
+        }catch(error){
+            console.log("Error fetching tasks : ", error);
+            return [];
         }
-
-        tasks.push(task);
-
-        localStorage.setItem(constants.quicknotes_tasks,JSON.stringify(tasks));        
-    }catch(error){
-        console.log("Error saving tasks : ", error);
     }
-}
+
+    function validateTask({title, description}) {
+        if(!title || !description){
+            alert("Please enter both title and description");
+            return false;
+        }
+        return true;
+    }
+
+    function saveTasks({title, description}) {
+        try{
+            if(!validateTask({title, description})){
+                return false;
+            }
+
+            const tasks = getTasks();
+
+            const task = {
+                id : generateID(),
+                title : title,
+                description : description
+            }
+
+            tasks.push(task);
+
+            localStorage.setItem(constants.quicknotes_tasks,JSON.stringify(tasks));        
+        }catch(error){
+            console.log("Error saving tasks : ", error);
+        }
+    }
+
+    function editTask(id,modifiedTask){
+        try{
+            const tasks = getTasks()
+
+            const updatedtasks = tasks.map(task => {
+                if(task.id === id){
+                    return {
+                        ...task,
+                        ...modifiedTask
+                    }
+                }
+                return task;
+            });
+
+            localStorage.setItem(constants.quicknotes_tasks, JSON.stringify(updatedtasks));
+
+            return true;
+        }catch(error){
+            console.log("Error editing the task", error);
+            return false;
+        }
+    }
+
+    const deleteTask = (id) => {
+        try{
+            const tasks = getTasks();
+            const filteredTasks = tasks.filter(task => task.id !== id);
+            localStorage.setItem(constants.quicknotes_tasks, JSON.stringify(filteredTasks));
+            return true;
+
+        }catch(error){
+            console.log("Error deleting the task", error);
+            return false;
+        }
+    }
+
+    return{
+        saveTasks,
+        getTasks,
+        editTask,
+        deleteTask
+    }
+
+})();

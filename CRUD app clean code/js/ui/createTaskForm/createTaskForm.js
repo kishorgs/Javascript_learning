@@ -1,57 +1,89 @@
 import { createElement } from "../../utility.js";
-import { saveTasks } from "../../storage.js";
+import { taskManager } from "../../storage.js";
+import { constants } from "../../constants.js";
 
-export const taskManagementForm = createElement('form', {
-    id : 'form',
-    className : 'form',
-    attributes : {method : 'POST', action : '#'},
-    events : {
-        submit : (event) => {
-            event.preventDefault();
+export function taskManagementForm(editModal = false, taskId = null, closeModal = null) {
+    const form = createElement('form', {
+        id : 'form',
+        className : 'form',
+        attributes : {method : 'POST', action : '#'},
+        events : {
+            submit : (event) => {
+                try{
+                    event.preventDefault();
 
-            const title = titleInputElement.value.trim();
-            const description = descriptionInputElement.value.trim();
+                    const title = titleInputElement.value.trim();
+                    const description = descriptionInputElement.value.trim();
 
-            saveTasks({ title , description });
+                    if(!editModal){
+                        taskManager.saveTasks({ title , description });
+                    }else{
+                        taskManager.editTask(taskId,{title,description});
+                    }
+
+                    titleInputElement.value = '';
+                    descriptionInputElement.value = '';
+
+                    if(closeModal){
+                        closeModal();
+                    }
+
+                    location.reload();  
+                }catch(error){
+                    console.log('Error submitting the task ', error);
+                }
+            }
+        }
+    });
+
+    const taskManagementFormHeader = createElement('h3', {
+        id : 'taskManagerDialogHader',
+        className : 'taskManagerDialogHader',
+        text : editModal ? 'Edit task': 'Create task',
+        styles : { textAlign : 'center'}
+    });
+
+    const titleInputElement = createElement('input', {
+        id : 'title',
+        className : 'title input',
+        attributes : {
+            placeholder : "Enter the task title : ",
+            type : 'text',
+            autoComplete : 'off'
+        }
+    })
+
+    const descriptionInputElement = createElement('input',{
+        id : 'description',
+        className : 'description input',
+        attributes : {
+            placeholder : 'Enter the description : ',
+            type : 'text',
+            autoComplete : 'off'
+        }
+    })
+
+    if(editModal && taskId){
+        const tasks = JSON.parse(localStorage.getItem(constants.quicknotes_tasks)) || [];
+
+        const task = tasks.find(task => task.id === taskId);
+
+        if(task){
+            titleInputElement.value = task.title;
+            descriptionInputElement.value = task.description;
         }
     }
-});
 
-const taskManagementFormHeader = createElement('h3', {
-    id : 'taskManagerDialogHader',
-    className : 'taskManagerDialogHader',
-    text : 'Create task',
-    styles : { textAlign : 'center'}
-});
+    const createTaskButton = createElement('button', {
+        id: 'createTaskButton',
+        className: 'button',
+        text : editModal ? 'Edit Task' : 'Create Task',
+        attributes : {
+            type : 'submit'
+        }
+    })
 
-const titleInputElement = createElement('input', {
-    id : 'title',
-    className : 'title input',
-    attributes : {
-        placeholder : "Enter the task title : ",
-        type : 'text',
-        autoComplete : 'off'
-    }
-})
-
-const descriptionInputElement = createElement('input',{
-    id : 'description',
-    className : 'description input',
-    attributes : {
-        placeholder : 'Enter the description : ',
-        type : 'text',
-        autoComplete : 'off'
-    }
-})
-
-const createTaskButton = createElement('button', {
-    id: 'createTaskButton',
-    className: 'button',
-    text : 'Create Task',
-    attributes : {
-        type : 'submit'
-    }
-})
-
-
-taskManagementForm.append(taskManagementFormHeader, titleInputElement, descriptionInputElement, createTaskButton);
+    
+    form.append(taskManagementFormHeader, titleInputElement, descriptionInputElement, createTaskButton);
+    return form;
+}
