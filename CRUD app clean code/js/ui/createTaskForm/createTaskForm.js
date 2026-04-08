@@ -1,6 +1,5 @@
 import { createElement } from "../../utility.js";
 import { taskManager } from "../../storage.js";
-import { constants } from "../../constants.js";
 
 export function taskManagementForm(editModal = false, taskId = null, closeModal = null) {
     const form = createElement('form', {
@@ -64,7 +63,7 @@ export function taskManagementForm(editModal = false, taskId = null, closeModal 
     })
 
     if(editModal && taskId){
-        const tasks = JSON.parse(localStorage.getItem(constants.quicknotes_tasks)) || [];
+        const tasks = taskManager.getTasks();
 
         const task = tasks.find(task => task.id === taskId);
 
@@ -87,3 +86,8 @@ export function taskManagementForm(editModal = false, taskId = null, closeModal 
     form.append(taskManagementFormHeader, titleInputElement, descriptionInputElement, createTaskButton);
     return form;
 }
+
+
+
+
+//This comment is added to test merge conflicts

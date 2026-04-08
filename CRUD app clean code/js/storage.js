@@ -1,5 +1,6 @@
 import { constants } from "./constants.js";
 import { generateID } from "./utility.js";
+import { Task } from "./task.js";
 
 export const taskManager = (() => {
     function getTasks(){
@@ -10,7 +11,7 @@ export const taskManager = (() => {
 
             const parsed  = JSON.parse(stored);
 
-            return Array.isArray(parsed) ? parsed : [];
+            return Array.isArray(parsed) ? parsed.map(t => new Task(t.id, t.title, t.description)) : [];
         }catch(error){
             console.log("Error fetching tasks : ", error);
             return [];
@@ -33,11 +34,7 @@ export const taskManager = (() => {
 
             const tasks = getTasks();
 
-            const task = {
-                id : generateID(),
-                title : title,
-                description : description
-            }
+            const task = new Task(generateID(), title, description);
 
             tasks.push(task);
 
