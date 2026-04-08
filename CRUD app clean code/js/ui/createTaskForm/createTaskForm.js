@@ -88,6 +88,10 @@ export function taskManagementForm(editModal = false, taskId = null, closeModal 
 }
 
 
+<<<<<<< HEAD
 
 
 //This comment is added to test merge conflicts
+=======
+// This is training branch
+>>>>>>> training
