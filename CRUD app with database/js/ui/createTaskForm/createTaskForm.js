@@ -77,8 +77,6 @@ export function taskManagementForm(editModal = false, taskId = null, closeModal 
                     if(closeModal){
                         closeModal();
                     }  
-
-                    location.reload();
                 }catch(error){
                     console.log('Error submitting the task ', error);
                 }
